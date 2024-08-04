@@ -1,22 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Quote Generator</title>
-</head>
-<body>
-  <h1>Dynamic Quote Generator</h1>
-  <div id="quoteDisplay"></div>
-  <button id="newQuoteButton">Show New Quote</button>
-  <div id="addQuoteFormContainer"></div>
-  <select id="categoryFilter" onchange="filterQuotes()">
-    <option value="all">All Categories</option>
-    <!-- Dynamically populated categories -->
-  </select>
-  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
-  <button id="exportButton">Export Quotes to JSON</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Quote Generator</title>
+  </head>
+  <body>
+    <h1>Dynamic Quote Generator</h1>
+    <div id="quoteDisplay"></div>
+    <button id="newQuoteButton">Show New Quote</button>
 
-  <script src="script.js"></script>
-</body>
+    <div id="addQuoteFormContainer"></div>
+    <input
+      type="file"
+      id="importFile"
+      accept=".json"
+      onchange="importFromJsonFile(event)"
+    />
+    <button id="exportButton">Export Quotes to JSON</button>
+
+    <select id="categoryFilter" onchange="filterQuotes()">
+      <option value="all">All Categories</option>
+      <!-- Dynamically populated categories -->
+    </select>
+
+    <script src="script.js"></script>
+  </body>
 </html>
