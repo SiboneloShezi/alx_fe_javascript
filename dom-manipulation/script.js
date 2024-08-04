@@ -111,7 +111,7 @@ function getUniqueCategories() {
 }
 
 // Function to populate the category filter dropdown
-function populateCategoryFilter() {
+function populateCategories() {
   const categoryFilter = document.getElementById("categoryFilter");
   const selectedCategory = categoryFilter.value;
 
@@ -162,5 +162,5 @@ document.getElementById("exportButton").addEventListener("click", exportToJson);
 
 // Initialize the page
 createAddQuoteForm();
-populateCategoryFilter();
+populateCategories();
 showRandomQuote();
