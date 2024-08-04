@@ -1,18 +1,26 @@
-// Initial array of quote objects
-const quotes = [
-  {
-    text: "The only limit to our realization of tomorrow is our doubts of today.",
-    category: "Motivation",
-  },
-  {
-    text: "Do not wait to strike till the iron is hot; but make it hot by striking.",
-    category: "Action",
-  },
-  {
-    text: "Great minds discuss ideas; average minds discuss events; small minds discuss people.",
-    category: "Wisdom",
-  },
-];
+// Load quotes from local storage or initialize with default quotes
+const storedQuotes = localStorage.getItem("quotes");
+const quotes = storedQuotes
+  ? JSON.parse(storedQuotes)
+  : [
+      {
+        text: "The only limit to our realization of tomorrow is our doubts of today.",
+        category: "Motivation",
+      },
+      {
+        text: "Do not wait to strike till the iron is hot; but make it hot by striking.",
+        category: "Action",
+      },
+      {
+        text: "Great minds discuss ideas; average minds discuss events; small minds discuss people.",
+        category: "Wisdom",
+      },
+    ];
+
+// Function to save quotes to local storage
+function saveQuotes() {
+  localStorage.setItem("quotes", JSON.stringify(quotes));
+}
 
 // Function to display a random quote
 function showRandomQuote() {
@@ -54,6 +62,7 @@ function addQuote() {
 
   if (newQuoteText && newQuoteCategory) {
     quotes.push({ text: newQuoteText, category: newQuoteCategory });
+    saveQuotes();
     document.getElementById("newQuoteText").value = "";
     document.getElementById("newQuoteCategory").value = "";
     alert("New quote added successfully!");
@@ -62,10 +71,38 @@ function addQuote() {
   }
 }
 
+// Function to export quotes to JSON
+function exportToJson() {
+  const dataStr = JSON.stringify(quotes);
+  const dataBlob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(dataBlob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "quotes.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Function to import quotes from JSON
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function (event) {
+    const importedQuotes = JSON.parse(event.target.result);
+    quotes.push(...importedQuotes);
+    saveQuotes();
+    alert("Quotes imported successfully!");
+    showRandomQuote(); // Update the displayed quote
+  };
+  fileReader.readAsText(event.target.files[0]);
+}
+
 // Event listener for the "Show New Quote" button
 document
   .getElementById("newQuoteButton")
   .addEventListener("click", showRandomQuote);
+
+// Event listener for the "Export Quotes to JSON" button
+document.getElementById("exportButton").addEventListener("click", exportToJson);
 
 // Initialize the page
 createAddQuoteForm();
