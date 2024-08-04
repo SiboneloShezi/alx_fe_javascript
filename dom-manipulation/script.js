@@ -25,16 +25,26 @@ function showRandomQuote() {
 // Function to create the form for adding new quotes
 function createAddQuoteForm() {
   const formContainer = document.getElementById("addQuoteFormContainer");
-  formContainer.innerHTML = `
-    <div>
-      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-      <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-      <button id="addQuoteButton">Add Quote</button>
-    </div>
-  `;
+
+  const newQuoteText = document.createElement("input");
+  newQuoteText.id = "newQuoteText";
+  newQuoteText.type = "text";
+  newQuoteText.placeholder = "Enter a new quote";
+  formContainer.appendChild(newQuoteText);
+
+  const newQuoteCategory = document.createElement("input");
+  newQuoteCategory.id = "newQuoteCategory";
+  newQuoteCategory.type = "text";
+  newQuoteCategory.placeholder = "Enter quote category";
+  formContainer.appendChild(newQuoteCategory);
+
+  const addQuoteButton = document.createElement("button");
+  addQuoteButton.id = "addQuoteButton";
+  addQuoteButton.textContent = "Add Quote";
+  formContainer.appendChild(addQuoteButton);
 
   // Event listener for the "Add Quote" button
-  document.getElementById("addQuoteButton").addEventListener("click", addQuote);
+  addQuoteButton.addEventListener("click", addQuote);
 }
 
 // Function to add a new quote
