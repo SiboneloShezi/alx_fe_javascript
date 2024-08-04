@@ -25,6 +25,11 @@ function saveQuotes() {
 // Function to display a random quote
 function showRandomQuote() {
   const filteredQuotes = getFilteredQuotes();
+  if (filteredQuotes.length === 0) {
+    const quoteDisplay = document.getElementById("quoteDisplay");
+    quoteDisplay.innerHTML = "<p>No quotes available in this category.</p>";
+    return;
+  }
   const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
   const quote = filteredQuotes[randomIndex];
   const quoteDisplay = document.getElementById("quoteDisplay");
@@ -123,18 +128,19 @@ function populateCategoryFilter() {
   });
 
   // Restore the last selected category
-  if (selectedCategory) {
+  const savedCategory = localStorage.getItem("selectedCategory");
+  if (savedCategory) {
+    categoryFilter.value = savedCategory;
+  } else if (selectedCategory) {
     categoryFilter.value = selectedCategory;
   }
 }
 
 // Function to filter quotes based on the selected category
 function filterQuotes() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  localStorage.setItem("selectedCategory", selectedCategory);
   showRandomQuote();
-  localStorage.setItem(
-    "selectedCategory",
-    document.getElementById("categoryFilter").value
-  );
 }
 
 // Function to get filtered quotes based on the selected category
@@ -152,4 +158,9 @@ document
   .addEventListener("click", showRandomQuote);
 
 // Event listener for the "Export Quotes to JSON" button
-doc;
+document.getElementById("exportButton").addEventListener("click", exportToJson);
+
+// Initialize the page
+createAddQuoteForm();
+populateCategoryFilter();
+showRandomQuote();
