@@ -43,8 +43,8 @@ async function postQuoteToServer(quote) {
   return response.json();
 }
 
-// Periodically fetch new quotes from the server
-async function fetchNewQuotes() {
+// Function to sync quotes with the server
+async function syncQuotes() {
   try {
     const serverQuotes = await fetchQuotesFromServer();
     const newQuotes = serverQuotes.map(quote => ({ text: quote.body, category: 'Server' }));
@@ -64,7 +64,7 @@ async function fetchNewQuotes() {
     showRandomQuote();
     populateCategories();
   } catch (error) {
-    console.error('Error fetching new quotes:', error);
+    console.error('Error syncing quotes:', error);
   }
 }
 
@@ -218,9 +218,12 @@ document.getElementById('newQuoteButton').addEventListener('click', showRandomQu
 // Event listener for the "Export Quotes to JSON" button
 document.getElementById('exportButton').addEventListener('click', exportToJson);
 
+// Event listener for the "Import Quotes from JSON" input
+document.getElementById('importFile').addEventListener('change', importFromJsonFile);
+
 // Initialize the page
 createAddQuoteForm();
 populateCategories();
 showRandomQuote();
 fetchInitialQuotes();
-setInterval(fetchNewQuotes, 60000); // Fetch new quotes every minute
+setInterval(syncQuotes, 60000); // Sync quotes every minute
